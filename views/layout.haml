@@ -2,24 +2,58 @@
 %html{ :lang => "en", "xml:lang" => "en", :xmlns => 'http://www.w3.org/1999/xhtml' }
   %head
     %meta{ "http-equiv" => "content-type", "content" => "text/html; charset=utf-8" }
+    
     - if @description
       %meta{ "name" => "description", "content" => @description }
     - if @keywords
       %meta{ "name" => "keywords", "content" => @keywords }
+    
     %title= @title
-    %link{ :href => "/css/master.css", :media => "screen", :rel => "stylesheet", :type => "text/css" }
+    
+    %link{ :href => "/css/lib/vendor/yui-3.reset.fonts.base.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css" }
+    
+    %link{ :href => "/css/app.css", :media => "screen", :rel => "stylesheet", :type => "text/css" }
+        
+    %script{:type => "text/javascript", :src => "http://use.typekit.com/aqf1bmo.js"}
+    :javascript
+      try{Typekit.load();}catch(e){}
+      
+    %script{ :type => "text/javascript", :src => "/js/lib/vendor/moo4q/jquery-1.4.2.js" }
+    %script{ :type => "text/javascript", :src => "/js/lib/vendor/moo4q/mootools-1.2.4-base.js" }
+    %script{ :type => "text/javascript", :src => "/js/lib/vendor/moo4q/Class.Mutators.jQuery.js" }
+    
+    %script{ :type => "text/javascript", :src => "/js/lib/vendor/plugins/jquery.backstretch.min.js" }
+    
+    %script{ :type => "text/javascript", :src => "/js/app.js"}
+    
     %link{ :href => "/articles.xml", :rel => "alternate", :type => "application/atom+xml" }
+  
   %body{ :class => @body_class }
-    #container
-      #wrapper
-        = yield
-
-        #footer
-          %p
-            Powered by
-            = succeed "," do
-              %a{ :href => "http://effectif.com/nesta" } nesta
-            designed by
-            %a{ :href => "http://effectif.com" } Graham Ashton
-
+  
+    %header
+      %a{:href => "/"}  
+        %h1 RYAN McKILLEN<span>'s</span>
+      #media
+        %a.blog{ :href => "/blog" }
+          BLOG
+        %a.twitter{ :href => "http://twitter.com/ryonlife" }
+          TWIT
+        %a.facebook{ :href => "http://www.facebook.com/ryan.mckillen" }
+          FACE
+        %a.github{ :href => "http://github.com/RyOnLife" }
+          GIT
+        
+    %section.content
+    
+      =yield
+  
+    %footer
+      %p#license
+        %a{:id => "creative_commons", :rel => "license", :href => "http://creativecommons.org/licenses/by-nc-sa/3.0/us/"}
+          %img{:src => "http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png", :alt => "Creative Commons License"}
+        This site is Creative Commons-licensed and <a href="http://github.com/RyOnLife/ryonlife.com">open-sourced on Github</a>.
+      %p Troy, buddy, <a href="http://www.flickr.com/photos/troyholden/4114564467/">thanks</a> for the rad pic taken right here in San Francisco.
+    
+    #shade
+    
     = haml :analytics, :layout => false

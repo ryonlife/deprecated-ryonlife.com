@@ -1,14 +1,14 @@
-/ .breadcrumb
-/   %a{ :href => "/" } Home
-/   &gt;
-/   - if @page.parent
-/     %a{ :href => @page.parent.abspath }= @page.parent.heading
-/     &gt;
-/   = @page.heading
+.breadcrumb
+  %a{ :href => "/" } Home
+  &gt;
+  - if @page.parent
+    %a{ :href => @page.parent.abspath }= @page.parent.heading
+    &gt;
+  = @page.heading
 
-/ #sidebar
-/   = haml :categories, :layout => false
-/   = haml :feed, :layout => false
+#sidebar
+  = haml :categories, :layout => false
+  = haml :feed, :layout => false
 
 #content
   - if @page.date
@@ -18,8 +18,8 @@
   - @page.pages.each do |page|
     = haml :summary, :layout => false, :locals => { :article => page, :heading => :h3 }
 
-  / - unless @page.articles.empty?
-  /   %h2.articles= "Articles on #{@page.heading}"
+  - unless @page.articles.empty?
+    %h2.articles= "Articles on #{@page.heading}"
   
   - @page.articles.each do |article|
     = haml :summary, :layout => false, :locals => { :article => article, :heading => :h3 }
@@ -30,6 +30,6 @@
       - @page.categories.each do |category|
         %a{ :href => category.abspath }= category.heading
 
-  / = haml :social, :layout => false
-  / = haml :feed, :locals => { :title => @site_title }, :layout => false
+  = haml :social, :layout => false
+  = haml :feed, :locals => { :title => @site_title }, :layout => false
   = haml :comments, :layout => false

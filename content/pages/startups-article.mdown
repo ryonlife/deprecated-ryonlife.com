@@ -1,0 +1,4 @@
+date: Thu Jun 10 23:50:03 -0700 2010
+categories: startups
+
+# An Article about startups...

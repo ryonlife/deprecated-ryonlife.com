@@ -3,7 +3,6 @@
   %small= @subtitle
 
 #sidebar
-  %p is cool
   = haml :categories, :layout => false
   = haml :feed, :layout => false
 

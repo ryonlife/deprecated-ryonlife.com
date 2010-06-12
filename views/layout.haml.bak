@@ -20,6 +20,6 @@
             = succeed "," do
               %a{ :href => "http://effectif.com/nesta" } nesta
             designed by
-            %a{ :href => "http://effectif.com" } Graham P. Ashton
+            %a{ :href => "http://effectif.com" } Graham Ashton
 
     = haml :analytics, :layout => false
