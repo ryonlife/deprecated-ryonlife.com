@@ -3,6 +3,5 @@
 .DS_Store
 config/config.yml
 config/deploy.rb
-content
 db/*.db
 public/cache
