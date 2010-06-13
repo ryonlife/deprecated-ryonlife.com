@@ -40,6 +40,6 @@ development:
   content: content
 
 production:
-  cache: true
+  cache: false
   content: content
   google_analytics_code: "UA-454125-9"
