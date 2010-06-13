@@ -2,6 +2,10 @@ body
   font-family: "ff-enzo-web-1","ff-enzo-web-2",sans-serif
   color: #FFF
   
+  a
+    color: #CCC
+  a:visited
+    color: #CCC
   a:hover
     text-decoration: none
   .clear
@@ -11,24 +15,21 @@ body
   
   header
     position: absolute
-    top: 0
-    right: 0
+    top: 20px
+    right: 30px
     display: inline
+    text-align: right
     a
       text-decoration: none
     h1
-      position: absolute
-      right: 20px
-      float: left
-      margin: 10px 0 0 20px
-      color: #570D00
+      display: inline
       font-size: 2em
       font-style: italic
       font-weight: normal
+      color: #570D00
       text-shadow: #fcf948 1px 0, #fcf948 2px 1px, #fcf948 3px 2px, #fcf948 4px 3px, #fcf948 5px 4px
-    #media
-      float: right
-      margin: 40px 20px 0 0
+    
+    nav
       font-size: 3em
       font-style: italic
       text-shadow: #FFF 1px 0, #FFF 2px 1px, #FFF 3px 2px, #FFF 4px 3px, #FFF 5px 4px
@@ -43,22 +44,26 @@ body
       a.facebook
         color: #3B5998
       a.github
-        color: #000
+        color: #C0C0C0
   
   section.content
     width: 600px
-    margin: 3em 0 6em 6em
+    margin: 76px 0 0 80px
+    
+    h1
+      margin-top: 0
         
   footer
-    margin: 1em 0 1em 6em
     p
-      margin: 5px 3px
+      margin: 0
+      line-height: 1.5em
       color: #999
       #creative_commons
         position: relative
         top: 3px
         margin-right: 5px
-      a
+      a,
+      a:visited
         color: #999
   
   #shade
@@ -70,34 +75,35 @@ body
     height: 100%
     background: rgba(0, 0, 0, 0.90)
         
-body.home
-  
-  header
-    display: block
-    width: 100%
-    h1
-      position: static
-      font-size: 3em
-      text-shadow: #fcf948 -1px 0, #fcf948 -2px 1px, #fcf948 -3px 2px, #fcf948 -4px 3px, #fcf948 -5px 4px
-      span
-        display: none
-    #media
-      margin-top: 10px
-  
+// Stick footer    
+html,
+body
+  height: 100%
+  #wrap
+    min-height: 100%
+  #main
+    overflow: hidden
+    padding-bottom: 65px
   footer
-    position: absolute
-    bottom: 0
-    margin: 0
-    width: 100%
+    position: relative
+    margin: -65px 0 0 80px
+    height: 65px
+    clear: both
+    
+// Homepage
+body.home
+  header h1
+    color: #570D00
+    text-shadow: #fcf948 1px 0, #fcf948 2px 1px, #fcf948 3px 2px, #fcf948 4px 3px, #fcf948 5px 4px
+  #main
+    padding-bottom: 20px
+  footer
+    margin: -20px 0 0 0
+    height: 20px
     background: rgba(0, 0, 0, 0.65)
     p
       display: inline
-      color: #CCC
-      a
-        color: #CCC
-    p#license
-      margin-right: 0 
-  
+      img
+        margin-left: 2px
   #shade
     display: none
-    
