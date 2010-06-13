@@ -1,5 +1,7 @@
-def cache(content, opts={})
-  headers 'Cache-Control' => 'public, max-age=300'
+helpers do
+  def cache(content, opts={})
+    headers 'Cache-Control' => 'public, max-age=300'
+  end
 end
 
 get '/' do
