@@ -19,6 +19,8 @@
     %script{ :type => "text/javascript", :src => "/js/app.js"}
     
     %link{ :href => "/articles.xml", :rel => "alternate", :type => "application/atom+xml" }
+    
+    = haml :analytics, :layout => false
   
   %body{ :class => @body_class }
     #wrap
@@ -48,5 +50,3 @@
       %p Troy, buddy, <a href="http://www.flickr.com/photos/troyholden/4114564467/">thanks</a> for the rad pic taken right here in San Francisco.
     
     #shade
-    
-    = haml :analytics, :layout => false
