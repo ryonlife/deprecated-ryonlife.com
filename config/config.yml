@@ -38,9 +38,8 @@ subtitle: "Ryan McKillen"
 development:
   cache: false
   content: content
-  google_analytics_code: "UA-454125-9"
 
 production:
-  cache: false
+  cache: true
   content: content
   google_analytics_code: "UA-454125-9"
