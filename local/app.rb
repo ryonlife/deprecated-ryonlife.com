@@ -1,9 +1,3 @@
-helpers do
-  def cache(content, opts={})
-    headers 'Cache-Control' => 'public, max-age=300'
-  end
-end
-
 get '/' do
   set_common_variables
   set_from_config(:title, :subtitle, :description, :keywords)
