@@ -6,6 +6,7 @@
     %title= @title
     
     %link{ :href => "/css/lib/vendor/yui-3.reset.fonts.base.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css" }
+    %link{ :href => "/css/lib/vendor/baseline.css", :media => "screen", :rel => "stylesheet", :type => "text/css" }
     %link{ :href => "/css/app.css", :media => "screen", :rel => "stylesheet", :type => "text/css" }
         
     %script{:type => "text/javascript", :src => "http://use.typekit.com/aqf1bmo.js"}
@@ -15,7 +16,10 @@
     %script{ :type => "text/javascript", :src => "/js/lib/vendor/moo4q/jquery-1.4.2.js" }
     %script{ :type => "text/javascript", :src => "/js/lib/vendor/moo4q/mootools-1.2.4-base.js" }
     %script{ :type => "text/javascript", :src => "/js/lib/vendor/moo4q/Class.Mutators.jQuery.js" }
+    
     %script{ :type => "text/javascript", :src => "/js/lib/vendor/plugins/jquery.backstretch.min.js" }
+    = haml :background_image, :layout => false
+    
     %script{ :type => "text/javascript", :src => "/js/app.js"}
     
     %link{ :href => "/articles.xml", :rel => "alternate", :type => "application/atom+xml" }
@@ -40,13 +44,15 @@
               GIT
   
         %section.content
-          =yield
+          = yield
 
     %footer
       %p
         %a{:id => "creative_commons", :rel => "license", :href => "http://creativecommons.org/licenses/by-nc-sa/3.0/us/"}
           %img{:src => "http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png", :alt => "Creative Commons License"}
-        This site is Creative Commons-licensed and <a href="http://github.com/RyOnLife/ryonlife.com">open-sourced on Github</a>.
-      %p Troy, buddy, <a href="http://www.flickr.com/photos/troyholden/4114564467/">thanks</a> for the rad pic taken right here in San Francisco.
+        This site is Creative Commons licensed and <a href="http://github.com/RyOnLife/ryonlife.com">on Github</a>.
+        Many
+        %a{:href => background_credit} thanks
+        for the rad pic.
     
     #shade

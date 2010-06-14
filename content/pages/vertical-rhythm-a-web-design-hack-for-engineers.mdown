@@ -1,0 +1,72 @@
+date: Jun 13 2010
+categories: code
+
+# Vertical Rhythm: A Web Design Hack for Engineers
+
+As a web developer, all too often I write beautiful code and wrap it in a giant design turd. Can't help it. Why isn't web design as easy as coding?
+
+Fortunately, I've discovered a handful of design hacks that even us left-brainers can pull off. Here's a cool one that uses math (yes!) to establish a vertical rhythm. Rhythmic pages are easy to read and they look awesome.
+
+## Introducing the Baseline Grid
+
+Imagine drawing equidistant horizontal lines (i.e. notebook paper) all the way down your web page. If all of the text, regardless of size, is centered between the lines, the page has vertical rhythm.
+
+<p><a href="#" id="view_grid">Click here to view a baseline grid on this page.</a></p>
+
+<p><small>(Note: This page uses a sticky footer, which usually won't hit the right spot on the grid. If you've ever implemented the much maligned sticky footer, you'll understand why I don't give a hoot (cracks me up when people say that) that it's not in rhythm.)</small></p>
+
+### How To
+
+Before beginning, make sure you're using a CSS reset. I like the [YUI 3](http://developer.yahoo.com/yui/3/) _CSS Reset_, along with _CSS Base_ and _CSS Fonts_.
+
+The `body` declaration in your CSS should establish a base `font-size` and `line-height`. In the print world (they invented this technique), line height is called _leading_. Roughly 1.5x the font size is a good leading to start with.
+
+    body {
+      font-size: 13px;
+      line-height: 18px;
+    }
+
+To style a font-containing element with a `font-size` differing from the base, do the following:
+
+* Set the `font-size` using ems as the unit. If the base font is 13px and you want a 20px heading, the `font-size` is `1.538em` (20 divided by 13).
+* Also set the `line-height` using ems. If the base leading is 18px and the font size is 20px, the `line-height` is `0.9em` (18 divided by 20).
+* Lastly, set all margins to 0 (padding too, if necessary), except for a `margin-bottom` of `0.9em` (equal to the leading).
+
+You'll end up with this:
+
+    h1 {
+      font-size: 1.538em;
+      line-height: 0.9em;
+      margin: 0 0 0.9em 0;
+    }
+
+### The Easy Way
+
+As if Geoffrey Grosenbach hasn't already done enough for the dev world ([Peepcode](http://www.peepcode.com), I love you), he's also bestowed upon us the [Baseline Rhythm Calculator](http://topfunky.com/baseline-rhythm-calculator/). Check it.
+
+When starting a new site, pop in a CSS reset, supplement with a `baseline.css` from the calculator and it's off to the races. Even with the calculator, you'll want to grok the math because inevitably, something will get out of whack, you'll want more font sizes, or need to deviate from the standard `bottom-margin = line-height` to achieve tighter (as in my nav) or expanded spacing.
+
+### Viewing the Grid
+
+For jQuery fans, I wrote a plugin that will draw a baseline grid on your page:
+
+    jQuery(function($){
+      $.fn.fontGrid = function(leading, color) {
+        $("body").append('<div id="grid">');
+        var $grid = $("#grid");
+        for(var i = 1; i < $(document).height() / leading; i++) {
+          $grid.append('<div class="baseline_grid_row">')
+        }
+        $grid.css({
+          position: "absolute",
+          top: 0,
+          zIndex: -1
+        })
+        .find(".baseline_grid_row")
+          .css({
+            height: leading - 1,
+            borderBottom: "1px solid "+color,
+          })
+      }
+      $.fn.fontGrid(18, "rgba(255, 255, 255, 0.35)");
+    });

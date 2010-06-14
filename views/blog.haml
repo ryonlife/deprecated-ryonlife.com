@@ -1,10 +1,11 @@
 %h1
   = @heading
 
-#sidebar
-  = haml :categories, :layout => false
-  / = haml :feed, :layout => false
+%h4 Categories
+= haml :categories, :layout => false
 
 #content
-  - @articles.each do |article|
-    = haml :summary, :layout => false, :locals => { :article => article, :heading => :h2 }
+  %h4 Posts
+  %ul
+    - @articles.each do |article|
+      = haml :summary, :layout => false, :locals => { :article => article }

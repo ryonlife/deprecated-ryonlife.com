@@ -1,0 +1,86 @@
+date: Jun 13 2010
+categories: code
+face: "test"
+
+# How To Incorporate Background Photos Into Your Nesta-Powered Blog
+
+I can't stand WordPress hacking and Git plus a text editor can run circles around the GUI for composing. I've taken up Ruby lately, so [Nesta](http://github.com/gma/nesta) is a perfect fit for me.
+
+<p><small>(Note: If you're a metrics guy/gal like me, check out <a href="http://github.com/RyOnLife/nesta/commit/38d8aee274040fb8fe3154addd39e36e8b8e0e59">my fork</a> for the updated Google Analytics asynchronous tracking snippet.)</small></p>
+
+I wanted each of my posts to have a uniqueness about them, but didn't want to invest much time into making that happen.
+
+Flickr has a great [advanced search feature](http://www.flickr.com/search/?l=cc&mt=all&adv=1&w=all&q=baseball&m=text) that will only return [Creative Commons-licensed](http://creativecommons.org/) content. Just attribute and you're free to use.
+
+This site has a [default image](http://www.ryonlife.com/content/attachments/backgrounds/index.jpg) that's used on the homepage. Whenever a page is requested, my modified Nesta checks for a unique image. If one exists, it's loaded. Otherwise, it reverts to using the default.
+
+## The Code
+
+For the sake of brevity, I'm assuming some basic HTML, Haml and JavaScript knowledge. If you get stuck, the entire source of ryonlife.com is in a [public repo on Github](http://github.com/RyOnLife/ryonlife.com).
+
+### Backend
+
+Start by adding adding additional structure to your `content` folder so you've got `content/attachments/backgrounds`. Inside of `backgrounds`, create a `credits.yml` file to house the attribution data:
+
+    index: "http://www.flickr.com/photos/troyholden/"
+    how-to-incorporate-background-photos-into-your-nesta-powered-blog: "http://www.flickr.com/photos/cdnphoto/"
+
+Specify an `index` key for your primary photo with the Flickr user's page as the value. For any page that should have its own image, use the filename (less the `.mdown` extension) as the key.
+
+Add `index.jpg` and (in my case) `how-to-incorporate-background-photos-into-your-nesta-powered-blog.jpg` images to the `content/attachments/backgrounds` folder.
+
+Nesta makes it really easy to add new methods. If you haven't already, create a `local/app.rb` file. Add two helper methods to it:
+
+    helpers do
+      def background_image
+        path = File.join(Nesta::Configuration.attachment_path, "backgrounds", File::SEPARATOR)
+        default = "#{path}index.jpg"
+        return default if @page.nil?
+        image = "#{path}#{@page.path}.jpg"
+        File.exist?(image) ? image : default
+      end
+
+      def background_credit
+        credits = File.join(Nesta::Configuration.attachment_path, "backgrounds", "credits.yml")
+        @@yaml ||= YAML::load(IO.read(credits))
+        (@page.nil? or @@yaml[@page.path].nil?) ? @@yaml["index"] : @@yaml[@page.path]
+      end
+    end
+    
+The `background_image` method will serve up the appropriate photo or the default. And `background_credit` will ensure you're able to give credit to the Flickr photographer that snapped the shot.
+
+### Frontend
+
+Grab [jQuery](http://jquery.com/) and the [jQuery Backstretch](http://srobbin.com/blog/jquery-plugins/jquery-backstretch/) plugin. Put them somewhere in your `public` folder and include the scripts in the document header (see [my repo](http://github.com/RyOnLife/ryonlife.com) for an example).
+
+Create a `local/views/background_image.haml` to initialize the jQuery:
+
+    %script{:type => "text/javascript"}
+      jQuery(function($){ $.backstretch("/#{background_image}"); });
+      
+Note the call to the `background_image` helper method from above.
+
+The remaining steps all involve changes to `layout.haml`.
+
+Drop the view in after references to jQuery and the jQuery Backstretch scripts:
+
+    = haml :background_image, :layout => false
+    
+In order to display the attribution, add this to the footer:
+
+    %a{:href => background_credit} Thanks for the photo!
+
+At the very end of the layout, include an empty `div` for the shade. The shade is that semi-transparent black layer that allows text to be visible above the photo:
+
+    #shade
+    
+And finally, we are going to deviate from the layout. The shade needs to be styled. Here's the Sass:
+
+    #shade
+      position: fixed
+      top: 0
+      left: 0
+      z-index: -1
+      width: 100%
+      height: 100%
+      background: rgba(0, 0, 0, 0.90)
